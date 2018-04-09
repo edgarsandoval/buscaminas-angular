@@ -1,0 +1,41 @@
+.mina-container {
+    width: 25px;
+    height: 25px;
+    background: #999;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    float: left;
+    margin: 5px;
+
+    &:hover {
+        background: #555;
+    }
+
+    &.opened {
+        background: #eee;
+    }
+
+    span {
+        transform: translate(8px, 4px);
+        position: absolute;
+        font-weight: bold;
+        transition: all 0.3s;
+
+        &.near-1 {
+            color: blue;
+        }
+
+        &.near-2 {
+            color: green;
+        }
+
+        &.near-3 {
+            color: red;
+        }
+
+        &.near-4 {
+            color: purple;
+        }
+    }
+}

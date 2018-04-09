@@ -1,0 +1,13 @@
+
+<div class="container">
+    <div class="menu-game">
+        <a mat-raised-button routerLink="/">Regresar al menu</a>
+
+        <span>{{ bombsLeft }} minas restantes</span>
+    </div>
+    <div class="game-container">
+        <div class="row" *ngFor="let fieldRow of buscaminas.fields">
+            <app-mina [mina]="field" *ngFor="let field of fieldRow"></app-mina>
+        </div>
+    </div>
+</div>

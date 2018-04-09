@@ -1,0 +1,4 @@
+<div class="mina-container {{ mina.class }}" (contextmenu)="onRightClick($event)" (click)="onClick($event)">
+    <mat-icon *ngIf="mina.icon != ''">{{ mina.icon }}</mat-icon>
+    <span *ngIf="mina.class == 'opened' && mina.nearbyMines != 0" class="near-{{ mina.nearbyMines }}">{{ mina.nearbyMines }}</span>
+</div>

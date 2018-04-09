@@ -1,0 +1,16 @@
+<div class="container">
+    <mat-grid-list cols="2" rowHeight="100px">
+        <mat-grid-tile>
+            <button mat-raised-button (click)="startGame(Buscaminas.levels.beginner)">Principiante</button>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <button mat-raised-button (click)="startGame(Buscaminas.levels.intermediate)">Intermedio</button>
+        </mat-grid-tile>
+        <mat-grid-tile>
+        <button mat-raised-button (click)="startGame(Buscaminas.levels.expert)">Experto</button>
+        </mat-grid-tile>
+        <mat-grid-tile>
+        <button mat-raised-button (click)="customizeGame()">Personalizado</button>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>

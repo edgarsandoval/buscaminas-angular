@@ -1,0 +1,24 @@
+<h2 mat-dialog-title>Personaliza tu juego</h2>
+<mat-dialog-content>
+    <form class="customize-form">
+        <mat-form-field class="full-width">
+            <input matInput type="text" placeholder="Ancho" [(ngModel)]="data.width" name="width" #width="ngModel" [range]="[3, 30]" required>
+        </mat-form-field>
+        <p *ngIf="width.errors?.range">El valor debe estar entre 3 y 30</p>
+        <p *ngIf="width.errors?.required">Este valor es requerido</p>
+        <mat-form-field class="full-width">
+            <input matInput type="number" placeholder="Alto" [(ngModel)]="data.height" name="height"  #height="ngModel" [range]="[3, 16]" required>
+        </mat-form-field>
+        <p *ngIf="height.errors?.range">El valor debe estar entre 3 y 16</p>
+        <p *ngIf="height.errors?.required">Este valor es requerido</p>
+        <mat-form-field class="full-width">
+            <input matInput type="number" placeholder="Bombas" [(ngModel)]="data.bombs" name="bombs" #bombs="ngModel" [gt]="1" [max]="data.width * data.height">
+        </mat-form-field>
+        <p *ngIf="bombs.errors?.gt">El valor debe ser mayor a 1</p>
+        <p *ngIf="bombs.errors?.max">El valor debe ser menor a {{ data.width * data.height }}</p>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions class="dialog-buttons">
+    <button mat-raised-button mat-dialog-close="false">Cancelar</button>
+    <button mat-raised-button [mat-dialog-close]="data" color="primary">Aceptar</button>
+</mat-dialog-actions>
