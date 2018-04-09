@@ -16,8 +16,12 @@
         background: #eee;
     }
 
+    &.mined {
+        background: red;
+    }
+
     span {
-        transform: translate(8px, 4px);
+        transform: translate(8px, 0px);
         position: absolute;
         font-weight: bold;
         transition: all 0.3s;

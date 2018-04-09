@@ -2,12 +2,12 @@
 <div class="container">
     <div class="menu-game">
         <a mat-raised-button routerLink="/">Regresar al menu</a>
-
-        <span>{{ bombsLeft }} minas restantes</span>
+        <span>{{ buscaminas.bombsLeft }} minas restantes</span>
+        <button mat-raised-button color="primary" (click)="resetGame()">Reiniciar juego</button>
     </div>
     <div class="game-container">
-        <div class="row" *ngFor="let fieldRow of buscaminas.fields">
-            <app-mina [mina]="field" *ngFor="let field of fieldRow"></app-mina>
+        <div class="row" *ngFor="let fieldRow of buscaminas.fields; let i = index;">
+            <app-mina [mina]="field" (mineCliked)="onMineClicked($event)" (mineOpened)="onMineOpened($event)" *ngFor="let field of fieldRow; let j = index;" [row]="i" [col]="j"></app-mina>
         </div>
     </div>
 </div>
