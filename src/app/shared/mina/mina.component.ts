@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
+import { GameComponent } from '../../game/game.component';
 import { Mina } from  '../models';
 
 @Component({
@@ -12,7 +13,9 @@ export class MinaComponent implements OnInit {
     @Input() col: number;
     @Output() mineCliked: EventEmitter<any> = new EventEmitter();
     @Output() mineOpened: EventEmitter<any> = new EventEmitter();
-    constructor() {
+    constructor(
+        @Inject(GameComponent) private $parent: GameComponent,
+    ) {
         this.mina = new Mina();
     }
 
@@ -22,6 +25,7 @@ export class MinaComponent implements OnInit {
     }
 
     onRightClick($event) {
+        if(this.$parent.buscaminas.bombsLeft == 0 && this.mina.getState() == 0) return;
         let response = this.mina.switchState();
         this.mineCliked.emit(response);
     }

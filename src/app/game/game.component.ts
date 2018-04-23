@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Buscaminas, IBuscaminasCofing, Queue, Mina } from '../shared/models';
+import { AlertComponent } from '../shared/alert/alert.component';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 declare var lscache: any;
 
@@ -12,8 +14,9 @@ export class GameComponent implements OnInit {
     public buscaminas: Buscaminas = null;
     public width: number;
     public height: number;
+    public gameBlocked = false;
 
-    constructor() {
+    constructor(private dialog: MatDialog) {
         this.buscaminas = new Buscaminas(lscache.get('buscaminas'));
         this.width = this.buscaminas.getConfig().width;
         this.height = this.buscaminas.getConfig().height;
@@ -34,9 +37,20 @@ export class GameComponent implements OnInit {
     }
 
     onMineOpened($event) {
+        if(this.gameBlocked) return;
+
+        let actualMine = this.buscaminas.fields[$event.row][$event.col];
+        if(actualMine.isMined) {
+            try {
+                actualMine.open();
+            } catch(e) {
+                this.loseGame();
+            }
+
+        }
 
         let queue = new Queue<Mina>();
-        queue.push(this.buscaminas.fields[$event.row][$event.col]);
+        queue.push(actualMine);
 
         while(!queue.isEmpty()) {
             let $actualField = queue.pop();
@@ -49,25 +63,25 @@ export class GameComponent implements OnInit {
                 !$actualField.isOpened
             ) {
 
-                let coordsX = [-1, -1, -1, 0, 0, 1, 1, 1];
-                let coordsY = [0, -1, 1, -1, 1, 0, 1, -1];
+                let coordsX = [-1, 0, 0, 1];
+                let coordsY = [0, -1, 1, 0];
 
-                for(var i = 0; i < 8; i++) {
+                for(var i = 0; i < 4; i++) {
                     let nearbyCoordX = coordX + coordsX[i];
                     let nearbyCoordY = coordY + coordsY[i];
 
-                    debugger;
 
+                    // debugger;
                     if(
                         (nearbyCoordX >= 0 && nearbyCoordX <= this.height - 1) &&
                         (nearbyCoordY >= 0 && nearbyCoordY <= this.width - 1) &&
-                        this.buscaminas.fields[nearbyCoordX][nearbyCoordY].nearbyMines == 0
+                        this.buscaminas.fields[nearbyCoordX][nearbyCoordY].nearbyMines == 0 &&
+                        !this.buscaminas.fields[nearbyCoordX][nearbyCoordY].isOpened
                     ) {
                         queue.push(this.buscaminas.fields[nearbyCoordX][nearbyCoordY]);
                     }
 
                 }
-
                 $actualField.open();
                 this.buscaminas.minesOpened++;
             }
@@ -80,14 +94,28 @@ export class GameComponent implements OnInit {
     }
 
     winGame() {
-        alert('Ganaste');
+    this.buscaminas.setFlagOnLefts();
+        this.gameBlocked = true;
+        let dialogRef = this.dialog.open(AlertComponent, {
+            width: '350px',
+            data: {
+                text: 'Ganaste el juego :)'
+            }
+        });
     }
 
     loseGame() {
-        alert('Perdiste');
+        this.gameBlocked = true;
+        let dialogRef = this.dialog.open(AlertComponent, {
+            width: '350px',
+            data: {
+                text: 'Perdiste el juego. :('
+            }
+        });
     }
 
     resetGame() {
+        this.gameBlocked = false;
         this.buscaminas.resetGame();
     }
 

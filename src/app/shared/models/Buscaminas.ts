@@ -108,6 +108,18 @@ export class Buscaminas {
     public static getRandomRange(min: number, max: number): number {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
+
+    setFlagOnLefts() {
+        for(var i = 0; i < this._config.height; i++) {
+            for(var j = 0; j < this._config.width; j++) {
+                let mine = this.fields[i][j];
+                if(mine.isMined && !mine.isOpened) {
+                    mine.switchState();
+                }
+            }
+        }
+
+    }
 }
 
 

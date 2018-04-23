@@ -17,6 +17,7 @@ import { MenuComponent } from './menu/menu.component';
 import { GameComponent } from './game/game.component';
 import { CustomizeComponent } from './shared/customize/customize.component';
 import { MinaComponent } from './shared/mina/mina.component';
+import { AlertComponent } from './shared/alert/alert.component';
 
 
 @NgModule({
@@ -25,10 +26,12 @@ import { MinaComponent } from './shared/mina/mina.component';
     MenuComponent,
     GameComponent,
     CustomizeComponent,
-    MinaComponent
+    MinaComponent,
+    AlertComponent
   ],
   entryComponents: [
-      CustomizeComponent
+      CustomizeComponent,
+      AlertComponent
   ],
   imports: [
     BrowserModule,

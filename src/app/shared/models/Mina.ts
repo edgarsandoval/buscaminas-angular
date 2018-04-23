@@ -38,6 +38,10 @@ export class Mina {
         }
     }
 
+    public getState(): number {
+        return this.state;
+    }
+
     public plantMine() {
         this.isMined = true;
     }
